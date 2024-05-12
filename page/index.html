@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/@xterm/xterm/lib/xterm.js"></script>
+    <link rel="stylesheet" href="../node_modules/@xterm/xterm/css/xterm.css">
+</head>
+<body>
+    <div style="height: 300px; width: 300px;" id="myId"></div>
+    
+    <script src="../lib.js"></script>
+    <script>
+        var terminal = new Terminal();
+        terminal.open(document.getElementById("myId"));
+        var binding = new TerminalBinding(terminal, "myTerminal");
+        bindTerminal(binding);
+        setCursorBlink("myTerminal", true);
+        writeText("myTerminal", "Are you sure you\r\nwant to continue?: ");
+        var text = readKey("myTerminal");
+        text.then(e => {
+            if (e.replace("\r\n", "").toLowerCase() == 'y') {
+                writeText("myTerminal", "\r\nbye bye");
+            }
+            else {
+                writeText("myTerminal", "\r\nhello!");
+            }
+        });
+    </script>
+</body>
+</html>
